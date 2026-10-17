@@ -1,0 +1,316 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <world name="robot_maze">
+
+    <!-- ================= PHYSICS ================= -->
+    <physics name="default_physics" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <!-- ================= GAZEBO SYSTEMS ================= -->
+    <plugin filename="gz-sim-physics-system"
+            name="gz::sim::systems::Physics"/>
+
+    <plugin filename="gz-sim-user-commands-system"
+            name="gz::sim::systems::UserCommands"/>
+
+    <plugin filename="gz-sim-scene-broadcaster-system"
+            name="gz::sim::systems::SceneBroadcaster"/>
+
+    <plugin filename="gz-sim-sensors-system"
+        name="gz::sim::systems::Sensors">
+       <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <!-- ================= LIGHTING ================= -->
+    <light name="sun" type="directional">
+      <pose>0 0 5 0 0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- ================= GROUND PLANE ================= -->
+    <!-- Centered maze spans x=-7.5..7.5 and y=-7.5..7.5 -->
+    <model name="ground_plane">
+      <static>true</static>
+      <pose>0 0 -0.05 0 0 0</pose>
+
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>15 15 0.1</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>15 15 0.1</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.75 0.75 0.75 1</ambient>
+            <diffuse>0.75 0.75 0.75 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ================= MAZE WALLS ================= -->
+    <model name="maze">
+      <static>true</static>
+      <!-- Center the original 0..15 m wall coordinates on the world origin -->
+      <pose>-7.5 -7.5 0 0 0 0</pose>
+
+      <!-- All walls: height 0.5 m, thickness 0.25 m (scaled proportionally) -->
+
+      <!-- OUTER TOP WALL -->
+      <link name="outer_top">
+        <pose>7.5 15 0.25 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box><size>15.25 0.25 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box><size>15.25 0.25 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.2 0.2 0.2 1</ambient>
+            <diffuse>0.3 0.3 0.3 1</diffuse>
+          </material>
+        </visual>
+      </link>
+
+      <!-- OUTER BOTTOM WALL -->
+      <link name="outer_bottom">
+        <pose>7.5 0 0.25 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box><size>15.25 0.25 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box><size>15.25 0.25 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.2 0.2 0.2 1</ambient>
+            <diffuse>0.3 0.3 0.3 1</diffuse>
+          </material>
+        </visual>
+      </link>
+
+      <!-- OUTER LEFT WALL -->
+      <link name="outer_left">
+        <pose>0 7.5 0.25 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box><size>0.25 15.25 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box><size>0.25 15.25 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.2 0.2 0.2 1</ambient>
+            <diffuse>0.3 0.3 0.3 1</diffuse>
+          </material>
+        </visual>
+      </link>
+
+      <!-- OUTER RIGHT WALL -->
+      <link name="outer_right">
+        <pose>15 7.5 0.25 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box><size>0.25 15.25 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box><size>0.25 15.25 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.2 0.2 0.2 1</ambient>
+            <diffuse>0.3 0.3 0.3 1</diffuse>
+          </material>
+        </visual>
+      </link>
+
+      <!-- ========== INTERIOR VERTICAL WALLS ========== -->
+
+      <link name="v1">
+        <pose>5 13.75 0.25 0 0 0</pose>
+        <collision name="collision">
+          <geometry><box><size>0.25 2.75 0.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.25 2.75 0.5</size></box></geometry>
+          <material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.3 0.3 0.3 1</diffuse></material>
+        </visual>
+      </link>
+
+      <link name="v2">
+        <pose>10 13.75 0.25 0 0 0</pose>
+        <collision name="collision">
+          <geometry><box><size>0.25 2.75 0.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.25 2.75 0.5</size></box></geometry>
+          <material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.3 0.3 0.3 1</diffuse></material>
+        </visual>
+      </link>
+
+      <link name="v3">
+        <pose>2.5 8.75 0.25 0 0 0</pose>
+        <collision name="collision">
+          <geometry><box><size>0.25 7.75 0.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.25 7.75 0.5</size></box></geometry>
+          <material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.3 0.3 0.3 1</diffuse></material>
+        </visual>
+      </link>
+
+      <link name="v4">
+        <pose>7.5 11.25 0.25 0 0 0</pose>
+        <collision name="collision">
+          <geometry><box><size>0.25 2.75 0.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.25 2.75 0.5</size></box></geometry>
+          <material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.3 0.3 0.3 1</diffuse></material>
+        </visual>
+      </link>
+
+      <link name="v5">
+        <pose>12.5 11.25 0.25 0 0 0</pose>
+        <collision name="collision">
+          <geometry><box><size>0.25 2.75 0.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.25 2.75 0.5</size></box></geometry>
+          <material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.3 0.3 0.3 1</diffuse></material>
+        </visual>
+      </link>
+
+      <link name="v6">
+        <pose>5 8.75 0.25 0 0 0</pose>
+        <collision name="collision">
+          <geometry><box><size>0.25 2.75 0.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.25 2.75 0.5</size></box></geometry>
+          <material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.3 0.3 0.3 1</diffuse></material>
+        </visual>
+      </link>
+
+      <link name="v7">
+        <pose>10 8.75 0.25 0 0 0</pose>
+        <collision name="collision">
+          <geometry><box><size>0.25 2.75 0.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.25 2.75 0.5</size></box></geometry>
+          <material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.3 0.3 0.3 1</diffuse></material>
+        </visual>
+      </link>
+
+      <link name="v8">
+        <pose>7.5 6.25 0.25 0 0 0</pose>
+        <collision name="collision">
+          <geometry><box><size>0.25 2.75 0.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.25 2.75 0.5</size></box></geometry>
+          <material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.3 0.3 0.3 1</diffuse></material>
+        </visual>
+      </link>
+
+      <link name="v9">
+        <pose>12.5 5 0.25 0 0 0</pose>
+        <collision name="collision">
+          <geometry><box><size>0.25 5.25 0.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.25 5.25 0.5</size></box></geometry>
+          <material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.3 0.3 0.3 1</diffuse></material>
+        </visual>
+      </link>
+
+      <!-- ========== INTERIOR HORIZONTAL WALLS ========== -->
+
+      <link name="h1">
+        <pose>8.75 10 0.25 0 0 0</pose>
+        <collision name="collision">
+          <geometry><box><size>7.75 0.25 0.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>7.75 0.25 0.5</size></box></geometry>
+          <material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.3 0.3 0.3 1</diffuse></material>
+        </visual>
+      </link>
+
+      <link name="h2">
+        <pose>12.5 7.5 0.25 0 0 0</pose>
+        <collision name="collision">
+          <geometry><box><size>5.25 0.25 0.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>5.25 0.25 0.5</size></box></geometry>
+          <material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.3 0.3 0.3 1</diffuse></material>
+        </visual>
+      </link>
+
+      <link name="h3">
+        <pose>6.25 5 0.25 0 0 0</pose>
+        <collision name="collision">
+          <geometry><box><size>7.75 0.25 0.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>7.75 0.25 0.5</size></box></geometry>
+          <material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.3 0.3 0.3 1</diffuse></material>
+        </visual>
+      </link>
+
+      <link name="h4">
+        <pose>1.25 2.5 0.25 0 0 0</pose>
+        <collision name="collision">
+          <geometry><box><size>2.75 0.25 0.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>2.75 0.25 0.5</size></box></geometry>
+          <material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.3 0.3 0.3 1</diffuse></material>
+        </visual>
+      </link>
+
+      <link name="h5">
+        <pose>8.75 2.5 0.25 0 0 0</pose>
+        <collision name="collision">
+          <geometry><box><size>7.75 0.25 0.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>7.75 0.25 0.5</size></box></geometry>
+          <material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.3 0.3 0.3 1</diffuse></material>
+        </visual>
+      </link>
+
+    </model>
+
+    <!-- ================= CAMERA VIEW ================= -->
+    <gui>
+      <camera name="top_view">
+        <pose>0 0 25 0 1.5708 0</pose>
+      </camera>
+    </gui>
+
+  </world>
+</sdf>
