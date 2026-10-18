@@ -1,0 +1,2 @@
+[console_scripts]
+dqn_controller = dqn_navigation.ros_node:main

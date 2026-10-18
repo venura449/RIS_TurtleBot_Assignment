@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: dqn-navigation
+Version: 0.1.0
+Summary: DQN goal-directed controller for TurtleBot3 Burger.
+Maintainer: TurtleBot3 Assignment
+Maintainer-email: student@example.com
+License: MIT
