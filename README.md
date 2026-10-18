@@ -32,7 +32,7 @@ source /opt/ros/jazzy/setup.bash
 export TURTLEBOT3_MODEL=burger
 export GZ_SIM_RESOURCE_PATH="/opt/ros/jazzy/share/turtlebot3_gazebo/models:${GZ_SIM_RESOURCE_PATH}"
 
-gz sim -r -v 4 ~/turtlebot3_assignment/worlds/maze.world
+gz sim -r -v 4 ~/turtlebot3_assignment/worlds/maze_3x3_centered.world
 ```
 
 The world file is [`worlds/maze.world`](worlds/maze.world). Keep this terminal running.
